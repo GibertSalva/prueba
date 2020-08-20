@@ -30,7 +30,7 @@ class Personia(models.Model):
     correo = models.CharField(max_length = 21)
     telefono = models.CharField(max_length = 20)
     numLibros = models.CharField(max_length = 20)
-    aduedo = models.CharField(max_length = 20)
+    adeudo = models.CharField(max_length = 20)
 
     def __str__(self):
         return "{} {}".format(self.nombres,self.apellido)
@@ -40,8 +40,8 @@ class Prestamo(models.Model):
     idd = models.CharField(max_length = 20)
     fechaSalida= models.CharField(max_length = 20)
     fechaRegreso = models.CharField(max_length = 20)
-    person = models.ForeignKey("Personia",on_delete=models.CASCADE,
-        null=False)
+    persona = models.ForeignKey("Personia",on_delete=models.CASCADE,null=False)
+    material = models.ForeignKey("Materiale", on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         return str(self.codigo)
@@ -50,7 +50,7 @@ class Prestamo(models.Model):
 
 class Libro(Materiale):
     editorial = models.CharField(max_length = 20)
-
+    foto = models.ImageField(max_length=100, upload_to='portadas/', blank=True)
     def __str__(self):
         return str(self.editorial)
 
@@ -63,7 +63,7 @@ class Alumno(Personia):
     def __str__(self):
         return str(self.matricula)
 
-class Profesore(models.Model):
+class Profesore(Personia):
     numEmpleado = models.IntegerField()
 
     def __str__(self):
